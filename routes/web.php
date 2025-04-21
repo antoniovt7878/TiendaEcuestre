@@ -19,4 +19,4 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('auth.dashboard');
-    })->middleware('auth');
+    })->middleware(['auth','verified']);
