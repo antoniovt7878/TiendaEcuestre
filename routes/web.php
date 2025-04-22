@@ -20,3 +20,21 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('auth.dashboard');
     })->middleware(['auth','verified']);
+/*
+Route::get('/home', function () {
+     return view('tienda.home');
+     })->middleware(['auth','verified'])->name('home');
+ */
+
+ /*  PARA LOS CONTROLADORES
+    Route::resource('carritos', CarritoController::class);
+    Route::resource('productos', ProductoController::class);
+    Route::resource('categorias', CategoriaController::class);
+    Route::resource('imagen-productos', ImagenProductoController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('pedidos', PedidoController::class);
+    Route::resource('direcciones', DireccionController::class);
+    Route::resource('metodos-pago', MetodoPagoController::class);
+    Route::resource('detalle-pedidos', DetallePedidoController::class);
+
+ */
