@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,7 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::statement('CREATE VIEW create_ejemplo_view AS SELECT id, name, email FROM users;');
+        Schema::create('carritos', function (Blueprint $table) {
+            $table->id();
+        $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+        $table->timestamps();
+        });
     }
 
     /**
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        DB::statement('DROP VIEW IF EXISTS create_ejemplo_view;');
+        Schema::dropIfExists('carritos');
     }
 };
