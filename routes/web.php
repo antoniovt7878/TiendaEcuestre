@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TiendaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +15,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/home', function () {
-    return view('auth.dashboard');
-    })->middleware(['auth','verified']);
+Route::post('tienda', [TiendaController::class, 'index'])-> name('tiendaFromLogin');
+
+Route::get('tienda', [TiendaController::class, 'index'])-> name('tienda.index');
+/*Route::get('/home', function () {
+    return view('home');
+});*/
 /*
 Route::get('/home', function () {
      return view('tienda.home');
      })->middleware(['auth','verified'])->name('home');
  */
-
  /*  PARA LOS CONTROLADORES
     Route::resource('carritos', CarritoController::class);
     Route::resource('productos', ProductoController::class);
