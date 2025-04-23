@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VentaFinalizada;
 use App\Models\Carrito;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\LineaDeCarrito;
 use App\Models\LineaDeVenta;
+use App\Models\User;
 use App\Models\Venta;
 use BaconQrCodeTest\Common\VersionTest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CarritosController extends Controller
 {
@@ -28,7 +31,7 @@ class CarritosController extends Controller
             $carrito->importeTotal = 0;
             $carrito->save();
         }
-        
+
         $importeTotal = $carrito->importeTotal;
         $lineaCarrito = [];
         $productos = [];
@@ -110,6 +113,7 @@ class CarritosController extends Controller
         if (!$usuario) {
             return redirect()->route('tienda.index');
         }
+        $usuario=User::findOrFail($usuario->id);
 
         $carrito = Carrito::where('user_id',$usuario->id)->firstOrFail();
 
@@ -134,6 +138,8 @@ class CarritosController extends Controller
             $linea->delete();
         }
         $carrito->delete();
+
+        Mail::to($usuario->email)->send(new VentaFinalizada($venta));
 
         return redirect()->route('verVentas');
     }
