@@ -6,14 +6,17 @@ use App\Models\Carrito;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\LineaDeCarrito;
+use App\Models\LineaDeVenta;
+use App\Models\Venta;
+use BaconQrCodeTest\Common\VersionTest;
+use Illuminate\Support\Facades\Auth;
 
 class CarritosController extends Controller
 {
-    public function agregarProductoAlCarrito(Request $request, $id)
-    {
-        $usuario = auth()->user();
+    public function index(){
+        $usuario = Auth::user();
         if (!$usuario) {
-            return redirect()->route('carrito');
+            return redirect()->route('tienda.index');
         }
 
         $usuarioId = $usuario->id;
@@ -25,27 +28,113 @@ class CarritosController extends Controller
             $carrito->importeTotal = 0;
             $carrito->save();
         }
+        
+        $importeTotal = $carrito->importeTotal;
+        $lineaCarrito = [];
+        $productos = [];
+
+        if ($carrito) {
+            $lineaCarrito = LineaDeCarrito::where('carrito_id', $carrito->id)->get();
+        }
+
+        foreach($lineaCarrito as $linea){
+            $producto = Producto::findOrFail($linea->producto_id);
+
+            if($producto){
+                $productos[] = [
+                    'id' => $producto->id,
+                    'nombre' => $producto->nombre,
+                    'precio' => $producto->precio,
+                    'cantidad' => $linea->cantidad
+                ];
+            }
+        }
+
+        return view('carrito', compact('productos','importeTotal'));
+    }
+
+    public function agregarProductoAlCarrito(Request $request, $id)
+    {
+        $usuario = Auth::user();
+        if (!$usuario) {
+            return redirect()->route('tienda.index');
+        }
+
+        $usuarioId = $usuario->id;
+        $carrito = Carrito::where('user_id', $usuarioId)->first();
+    
+        if ($carrito === null) {
+            $carrito = new Carrito();
+            $carrito->user_id = $usuarioId; 
+            $carrito->importeTotal = 0;
+            $carrito->save();
+        }
+
+        $carrito = Carrito::where('user_id', $usuarioId)->first();
     
         $producto = Producto::findOrFail($id);
     
         $lineaDeCarrito = new LineaDeCarrito();
         $lineaDeCarrito->producto_id = $producto->id;
         $lineaDeCarrito->cantidad = 1;
+        $lineaDeCarrito->carrito_id= $carrito->id;
         $lineaDeCarrito->importeParcial = $producto->precio * $lineaDeCarrito->cantidad;
         $carrito->importeTotal += $lineaDeCarrito->importeParcial;
     
         $lineaDeCarrito->save();
         $carrito->save();
     
-        return redirect()->route('carrito');
+        return redirect()->route('tienda.index');
     }
 
     public function eliminarProductoDelCarrito($id)
     {
-        $carrito = Carrito::where('user_id', auth()->id())->where('producto_id', $id)->firstOrFail();
+        $usuario = Auth::user();
+        if (!$usuario) {
+            return redirect()->route('tienda.index');
+        }
 
+        $usuarioId = $usuario->id;
+        $carrito = Carrito::where('user_id', $usuarioId)->firstOrFail();
+        $lineaCarrito = LineaDeCarrito::where('carrito_id', $carrito->id)->where('producto_id', $id)->firstOrFail();
+        $carrito->importeTotal -= $lineaCarrito->importeParcial;
+        $carrito->save();
+        $lineaCarrito->delete();
+
+        return redirect()->route('verCarrito');
+    }
+
+    public function terminarCarrito()
+    {
+        $usuario = Auth::user();
+        if (!$usuario) {
+            return redirect()->route('tienda.index');
+        }
+
+        $carrito = Carrito::where('user_id',$usuario->id)->firstOrFail();
+
+        $venta = new Venta();
+        $venta->user_id = $usuario->id;
+        $venta->importeTotal = $carrito->importeTotal;
+        $venta->estado = "Notificado";
+        $venta->save();
+
+        $lineaCarrito = LineaDeCarrito::where('carrito_id', $carrito->id)->get();
+
+        foreach($lineaCarrito as $linea){
+            $lineaVenta = new LineaDeVenta();
+            $lineaVenta->cantidad = $linea->cantidad;
+            $lineaVenta->importeParcial = $linea->importeParcial;
+            $lineaVenta->venta_id=$venta->id;
+            $lineaVenta->producto_id=$linea->producto_id;
+            $lineaVenta->save();
+        }
+
+        foreach($lineaCarrito as $linea){
+            $linea->delete();
+        }
         $carrito->delete();
 
-        return redirect()->route('tienda.index')->with('success', 'Producto eliminado del carrito.');
+        return redirect()->route('verVentas');
     }
 }

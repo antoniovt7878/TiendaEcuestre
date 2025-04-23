@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritosController;
+use App\Http\Controllers\VentasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,23 +25,11 @@ Route::post('tienda', [TiendaController::class, 'index'])-> name('tiendaFromLogi
 Route::get('tienda', [TiendaController::class, 'index'])-> name('tienda.index');
 
 Route::get('/carrito/agregar/{id}', [CarritosController::class, 'agregarProductoAlCarrito'])->name('carrito.agregar');
-/*Route::get('/home', function () {
-    return view('home');
-});*/
-/*
-Route::get('/home', function () {
-     return view('tienda.home');
-     })->middleware(['auth','verified'])->name('home');
- */
- /*  PARA LOS CONTROLADORES
-    Route::resource('carritos', CarritoController::class);
-    Route::resource('productos', ProductoController::class);
-    Route::resource('categorias', CategoriaController::class);
-    Route::resource('imagen-productos', ImagenProductoController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('pedidos', PedidoController::class);
-    Route::resource('direcciones', DireccionController::class);
-    Route::resource('metodos-pago', MetodoPagoController::class);
-    Route::resource('detalle-pedidos', DetallePedidoController::class);
+Route::get('/carrito/eliminar/{id}', [CarritosController::class, 'eliminarProductoDelCarrito'])->name('carrito.eliminar');
+Route::get('/carrito/terminar', [CarritosController::class, 'terminarCarrito'])->name('carrito.terminar');
 
- */
+Route::get('carrito', [CarritosController::class, 'index'])->name('verCarrito');
+
+Route::get('pedidos', [VentasController::class, 'index'])->name('verVentas');
+
+Route::get('/pedidos/consultar/{id}', [VentasController::class, 'consultar'])->name('venta.consultar');
