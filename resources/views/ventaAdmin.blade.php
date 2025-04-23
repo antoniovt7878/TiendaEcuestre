@@ -17,20 +17,7 @@
                 <tr>
                     <td>{{ $venta->id }}</td>
                     <td>${{ number_format($venta->importeTotal, 2) }}</td>
-                    <td>{{ $venta->estado }}
-                    @if(session('user_rol')=='admin')
-                        <form action="{{ route('venta.modificar', $venta->id) }}">
-                            <select name="estado" class="form-select">
-                                <option value="Notificado">Notifiado</option>
-                                <option value="Enviado">Enviado</option>
-                                <option value="Entregado">Entregado</option>
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                Guardar
-                            </button>
-                        </form>
-                    @endif
-                    </td>
+                    <td>{{ $venta->estado }}</td>
                     <td>
                         <form action="{{ route('venta.consultar', $venta->id) }}">
                             <button type="submit" class="btn btn-sm btn-primary">

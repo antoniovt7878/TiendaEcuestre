@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VentaFinalizada;
 use App\Models\LineaDeVenta;
 use App\Models\Pedido;
 use App\Models\Producto;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class VentasController extends Controller
 {
@@ -16,8 +18,12 @@ class VentasController extends Controller
         if (!$usuario) {
             return redirect()->route('tienda.index');
         }
+        if(session('user_rol')=='admin'){
+            $ventas = Venta::all();
+        }else{
+            $ventas = Venta::where('user_id', $usuario->id)->get();
+        }
 
-        $ventas = Venta::where('user_id', $usuario->id)->get();
 
         return view('venta', compact('ventas'));
     }
@@ -45,5 +51,19 @@ class VentasController extends Controller
         }
 
         return view('ventaConsulta', compact('productos'));
+    }
+
+    public function modificar(Request $request, $id){
+        $usuario = Auth::user();
+        if (!$usuario) {
+            return redirect()->route('tienda.index');
+        }
+
+        $venta = Venta::findOrFail($id);
+
+        $venta->estado = $request->estado;
+        $venta->save();
+
+        return redirect()->route('verVentas');
     }
 }

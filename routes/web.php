@@ -3,6 +3,7 @@
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritosController;
 use App\Http\Controllers\VentasController;
+use App\Http\Controllers\ProductosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,9 @@ Route::get('carrito', [CarritosController::class, 'index'])->name('verCarrito');
 Route::get('pedidos', [VentasController::class, 'index'])->name('verVentas');
 
 Route::get('/pedidos/consultar/{id}', [VentasController::class, 'consultar'])->name('venta.consultar');
+Route::get('/pedidos/modificar/{id}', [VentasController::class, 'modificar'])->name('venta.modificar');
+
+Route::post('productos', [ProductosController::class, 'crear'])->name('producto.crear');
+Route::post('productos/guardar/{id}', [ProductosController::class, 'guardar'])->name('producto.guardar');
+Route::post('productos/eliminar/{id}', [ProductosController::class, 'eliminar'])->name('producto.eliminar');
+Route::get('productos', [ProductosController::class, 'index'])->name('producto.ver');
