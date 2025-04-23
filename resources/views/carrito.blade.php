@@ -1,7 +1,8 @@
 @extends('global.base')
 
 @section('content')
-<div class="container mt-5">
+
+< class="container mt-5">
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle text-center">
             <thead class="table-secondary">
@@ -9,7 +10,6 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
-                    <th>Stock</th>
                     <th>Marca</th>
                     <th>Acciones</th>
                 </tr>
@@ -20,23 +20,27 @@
                     <td>{{ $producto->nombre }}</td>
                     <td>{{ $producto->descripcion }}</td>
                     <td>${{ number_format($producto->precio, 2) }}</td>
-                    <td>{{ $producto->stock }}</td>
                     <td>{{ $producto->marca }}</td>
                     <td>
-                        <form action="{{ route('carrito.agregar', $producto->id) }}">
-                            <button type="submit" class="btn btn-sm btn-warning">
-                                <i class="bi bi-cart-plus"></i> Añadir
+                        <!--<form action="{{ route('agregarProductoAlCarrito', $producto) }}">-->
+                        <form action="{{ route('tienda.index', $producto) }}" method="GET">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                 Eliminar
                             </button>
                         </form>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-muted">No hay productos actualmente.</td>
+                    <td colspan="5" class="text-muted">No hay productos actualmente.</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-</div>
+    <div class="d-flex justify-content-between mt-3">
+        <a href="{{ route('tienda.index') }}" class="btn btn-primary">Volver a la tienda</a>
+        <a href="{{ route('checkout') }}" class="btn btn-success">Terminar pedido</a>
+    </div>
+</div>      
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\CarritosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/', function () {
 Route::post('tienda', [TiendaController::class, 'index'])-> name('tiendaFromLogin');
 
 Route::get('tienda', [TiendaController::class, 'index'])-> name('tienda.index');
+
+Route::get('/carrito/agregar/{id}', [CarritosController::class, 'agregarProductoAlCarrito'])->name('carrito.agregar');
 /*Route::get('/home', function () {
     return view('home');
 });*/
