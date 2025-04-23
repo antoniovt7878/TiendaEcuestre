@@ -8,24 +8,21 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('carritos', function (Blueprint $table) {
             $table->id();
-        $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
-        $table->timestamps();
+            $table->timestamps();
+            $table->double("importeTotal");
+            $table->foreignId('user_id')->nullable()->constrained();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('carritos');
     }

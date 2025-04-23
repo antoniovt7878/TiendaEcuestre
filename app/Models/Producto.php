@@ -2,44 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Producto extends Model
 {
     use HasFactory;
 
-    protected $table = 'productos';
+    public function LineaDeVenta (){
+        return $this->belongsTo(LineaDeVenta::class);
+    }
 
-    protected $fillable = [
-        'nombre',
-        'descripcion',
-        'precio',
-        'stock',
-        'categoria_id',
-    ];
-
-    // Relaciones
+    public function LineaDeCarrito (){
+        return $this->belongsTo(LineaDeCarrito::class);
+    }
     
-    public function categoria()
+    public function categorias()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsToMany(Categoria::class, 'producto_categoria');
     }
-
-
-    public function imagenes()
-    {
-        return $this->hasMany(ImagenProducto::class);
-    }
-
-    public function detallesPedido()
-    {
-        return $this->hasMany(DetallePedido::class);
-    }
-
-    public function carrito()
-    {
-        return $this->hasMany(Carrito::class);
-    }
-        
 }

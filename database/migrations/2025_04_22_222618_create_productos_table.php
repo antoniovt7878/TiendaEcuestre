@@ -8,30 +8,24 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->decimal('precio', 10, 2);
-            $table->integer('stock')->default(0);
-            $table->unsignedBigInteger('categoria_id');
             $table->timestamps();
-
-            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->double('precio');
+            $table->integer('stock');
+            $table->string('marca');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('productos');
     }

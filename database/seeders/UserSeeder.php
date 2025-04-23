@@ -19,20 +19,20 @@ class UserSeeder extends Seeder
             'name' => 'Antonio Vazquez',
             'email' => 'antoniovaztor2002@gmail.com',
             'password' => bcrypt('12345678'),
-            'rol' => 'cliente'
+            'rol_id' => '1'
 
         ]);
         User::create([
             'name' => 'Angel Perez',
             'email' => 'perezmaestreangel@gmail.com',
             'password' => bcrypt('12345678'),
-            'rol' => 'cliente'
+            'rol_id' => '1'
         ]);
         User::create([
             'name' => 'Jose Lopez',
             'email' => 'joselopez@gmail.com',
             'password' => bcrypt('12345678'),
-            'rol' => 'administrador'
+            'rol_id' => '2'
         ]);
     }
 }
