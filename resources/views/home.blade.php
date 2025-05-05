@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container mt-5">
+    <div>
+        <h1 class="text-center">Bienvenido a la Tienda Ecuestre</h1>
+        <p class="text-center">Explora nuestros productos y realiza tus compras de manera fácil y rápida.</p>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle text-center">
             <thead class="table-secondary">

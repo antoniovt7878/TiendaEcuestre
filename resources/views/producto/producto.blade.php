@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-5">
-    <!-- Crear Producto -->
+    @if(session('user_rol')=='admin')
     <div class="card p-4">
         <h2 class="mb-4">Crear Producto</h2>
         <form action="{{ route('producto.crear') }}" method="POST">
@@ -35,8 +35,7 @@
             <button type="submit" class="btn btn-primary mt-3">Crear</button>
         </form>
     </div>
-
-    <!-- Tabla de productos -->
+    @endif
     <div class="card mt-4 p-4">
         <h2 class="mb-4">Productos</h2>
         <div class="table-responsive">
@@ -53,6 +52,7 @@
                 </thead>
                 <tbody>
                     @forelse($productos as $producto)
+                    @if(session('user_rol')=='admin')
                     <tr>
                         <form action="{{ route('producto.guardar', $producto->id) }}" method="POST">
                             @csrf
@@ -85,6 +85,22 @@
                             </form>
                         </td>
                     </tr>
+                    @else
+                    <tr>
+                        <td>{{ $producto->nombre }}</td>
+                        <td>{{ $producto->descripcion }}</td>
+                        <td>${{ number_format($producto->precio, 2) }}</td>
+                        <td>{{ $producto->stock }}</td>
+                        <td>{{ $producto->marca }}</td>
+                        <td>
+                            <form action="{{ route('carrito.agregar', $producto->id) }}">
+                                <button type="submit" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-cart-plus"></i> Añadir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endif
                     @empty
                     <tr>
                         <td colspan="6" class="text-muted">No hay productos actualmente.</td>
