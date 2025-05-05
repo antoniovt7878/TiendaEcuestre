@@ -20,7 +20,11 @@ class TiendaController extends Controller
 
         session(['user_rol' => $rol->name]);
 
-        $productos = Producto::all();
-        return view('home', compact('productos'));
+        if($rol->name === 'admin'){
+            return view('homeAdmin');
+        }else{
+            $productos = Producto::all();
+            return view('home', compact('productos'));
+        }
     }
 }
