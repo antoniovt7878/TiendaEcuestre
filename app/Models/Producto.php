@@ -21,4 +21,10 @@ class Producto extends Model
     {
         return $this->belongsToMany(Categoria::class, 'producto_categoria');
     }
+
+    public function deseos()
+    {
+        return $this->hasMany(Deseo::class);
+    }
+
 }
