@@ -54,11 +54,18 @@
                                     <i class="bi bi-cart-plus me-1"></i> Añadir al carrito
                                 </button>
                             </form>
-                            <form action="{{ route('producto.like', $producto->id) }}" class="mt-auto">
+                            <form action="{{ route('deseo.like', $producto->id) }}" class="mt-auto">
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-heart"></i> Me gusta
                                 </button>
                             </form>
+                            @if(session('user_rol')=='admin')
+                            <form action="{{ route('producto.eliminar', $producto->id) }}" class="mt-auto">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </button>
+                            </form>
+                            @endif
                         </div>
                     </div>
                 </div>

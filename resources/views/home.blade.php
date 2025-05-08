@@ -30,7 +30,7 @@
                                 <i class="bi bi-cart-plus me-1"></i> Añadir al carrito
                             </button>
                         </form>
-                        <form action="{{ route('producto.like', $producto->id) }}" class="mt-auto">
+                        <form action="{{ route('deseo.like', $producto->id) }}" class="mt-auto">
                             <button type="submit" class="btn btn-danger">
                                 <i class="bi bi-heart"></i> Me gusta
                             </button>

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritosController;
+use App\Http\Controllers\DeseosController;
+use App\Http\Controllers\DireccionesController;
 use App\Http\Controllers\VentasController;
 use App\Http\Controllers\ProductosController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,7 @@ Route::get('tienda', [TiendaController::class, 'index'])-> name('tienda.index');
 
 Route::get('/carrito/agregar/{id}', [CarritosController::class, 'agregarProductoAlCarrito'])->name('carrito.agregar');
 Route::get('/carrito/eliminar/{id}', [CarritosController::class, 'eliminarProductoDelCarrito'])->name('carrito.eliminar');
-Route::get('/carrito/terminar', [CarritosController::class, 'terminarCarrito'])->name('carrito.terminar');
+Route::post('/carrito/terminar', [CarritosController::class, 'terminarCarrito'])->name('carrito.terminar');
 
 Route::get('carrito', [CarritosController::class, 'index'])->name('verCarrito');
 
@@ -40,4 +42,10 @@ Route::post('productos', [ProductosController::class, 'crear'])->name('producto.
 Route::post('productos/guardar/{id}', [ProductosController::class, 'guardar'])->name('producto.guardar');
 Route::post('productos/eliminar/{id}', [ProductosController::class, 'eliminar'])->name('producto.eliminar');
 Route::get('productos', [ProductosController::class, 'index'])->name('producto.ver');
-Route::get('productos/like', [ProductosController::class, 'like'])->name('producto.like');
+
+Route::get('productos/like/{id}', [DeseosController::class, 'agregarProductoAlDeseo'])->name('deseo.like');
+Route::get('deseo', [DeseosController::class, 'index'])->name('verDeseo');
+
+Route::post('direccion/crear', [DireccionesController::class, 'crear'])->name('crearDireccion');
+Route::post('direccion', [DireccionesController::class, 'index'])->name('direccion.ver');
+Route::post('direccion/eliminar/{id}', [DireccionesController::class, 'eliminar'])->name('direccion.eliminar');

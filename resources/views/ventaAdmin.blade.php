@@ -9,6 +9,7 @@
                     <th>Numero de pedido</th>
                     <th>Importe</th>
                     <th>Estado</th>
+                    <th>Direccion</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -18,6 +19,7 @@
                     <td>{{ $venta->id }}</td>
                     <td>${{ number_format($venta->importeTotal, 2) }}</td>
                     <td>{{ $venta->estado }}</td>
+                    <td>{{ $venta->direccion->calle }}, {{ $venta->direccion->ciudad }}</td>
                     <td>
                         <form action="{{ route('venta.consultar', $venta->id) }}">
                             <button type="submit" class="btn btn-sm btn-primary">

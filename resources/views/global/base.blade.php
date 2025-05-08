@@ -34,6 +34,12 @@
                             {{ $cantidadCarrito }}
                         </span>
                     </a>
+                    <a class="nav-link position-relative" href="{{ route('verDeseo') }}">
+                        <i class="bi bi-heart-fill"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark cart-count">
+                            {{ $cantidadDeseo }}
+                        </span>
+                    </a>
                     @auth
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">

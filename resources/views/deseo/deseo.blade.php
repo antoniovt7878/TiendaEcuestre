@@ -2,14 +2,26 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1>Carrito de compra</h1>
+    <h1>Lista de deseos</h1>
+    <div>
+        <h3>El producto mas deseado es:</h3>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 bg-light">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ $deseoMax->nombre }}</h5>
+                    <p class="card-text text-muted">{{ $deseoMax->descripcion }}</p>
+                    <p class="fw-bold text-success mb-2">${{ number_format($deseoMax->precio, 2) }}</p>
+                    <small class="text-muted mb-2">Stock: {{ $deseoMax->stock }} | Marca: {{ $deseoMax->marca }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle text-center">
             <thead class="table-secondary">
                 <tr>
                     <th>Nombre</th>
                     <th>Precio</th>
-                    <th>Cantidad</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -18,9 +30,8 @@
                 <tr>
                     <td>{{ $producto['nombre'] }}</td>
                     <td>${{ number_format($producto['precio'], 2) }}</td>
-                    <td>{{ $producto['cantidad'] }}</td>
                     <td>
-                        <form action="{{ route('carrito.eliminar', $producto['id']) }}">
+                        <form action="{{ route('deseo.like', $producto['id']) }}">
                             <button type="submit" class="btn btn-sm btn-danger">
                                 Eliminar
                             </button>
@@ -29,30 +40,14 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-muted">No hay productos actualmente.</td>
+                    <td colspan="4" class="text-muted">No hay productos en la lista de deseos actualmente.</td>
                 </tr>
                 @endforelse
-                <tr>
-                    <td>Importe total:</td>
-                    <td colspan="3">${{ number_format($importeTotal, 2) }}</td>
-                </tr>
             </tbody>
         </table>
     </div>
     <div class="d-flex justify-content-between mt-3">
         <a href="{{ route('tienda.index') }}" class="btn btn-primary">Volver a la tienda</a>
-        <form action="{{ route('carrito.terminar') }}" method="POST">
-            @csrf
-            <select name="direccion" id="direccion">
-                @forelse($direcciones as $direccion)
-                <option value="{{ $direccion->id }}">{{ $direccion->calle }}, {{ $direccion->ciudad }}</option>
-                @empty
-                <option value="">No hay direcciones disponibles</option>
-                @endforelse
-            </select>
-            <a href="{{ route('direccion.ver') }}" class="btn btn-warning">Nueva direccion</a>
-            <button type="submit" class="btn btn-success">Terminar pedido</button>
-        </form>
     </div>
 </div>
 @endsection

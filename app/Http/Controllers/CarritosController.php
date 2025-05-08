@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\VentaFinalizada;
 use App\Models\Carrito;
+use App\Models\Direccion;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\LineaDeCarrito;
@@ -53,7 +54,9 @@ class CarritosController extends Controller
             }
         }
 
-        return view('carrito', compact('productos','importeTotal'));
+        $direcciones = Direccion::where('user_id',$usuarioId)->get();
+
+        return view('carrito', compact('productos','importeTotal','direcciones'));
     }
 
     public function agregarProductoAlCarrito(Request $request, $id)
@@ -107,7 +110,7 @@ class CarritosController extends Controller
         return redirect()->route('verCarrito');
     }
 
-    public function terminarCarrito()
+    public function terminarCarrito(Request $request)
     {
         $usuario = Auth::user();
         if (!$usuario) {
@@ -116,11 +119,13 @@ class CarritosController extends Controller
         $usuario=User::findOrFail($usuario->id);
 
         $carrito = Carrito::where('user_id',$usuario->id)->firstOrFail();
+        $direccion = Direccion::findOrFail($request->direccion);
 
         $venta = new Venta();
         $venta->user_id = $usuario->id;
         $venta->importeTotal = $carrito->importeTotal;
         $venta->estado = "Notificado";
+        $venta->direccion_id = $direccion->id;
         $venta->save();
 
         $lineaCarrito = LineaDeCarrito::where('carrito_id', $carrito->id)->get();
