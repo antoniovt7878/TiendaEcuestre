@@ -16,4 +16,10 @@ class Venta extends Model
     public function lineaDeVentas (){
         return $this->hasMany(LineaDeVenta::class);
     }
+
+    public function direccion()
+    {
+        return $this->belongsTo(Direccion::class);
+    }
+
 }
