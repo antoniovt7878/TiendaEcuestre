@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('linea_de_deseos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer("contador");
-            $table->double("importeParcial");
             $table->foreignId('deseo_id')->nullable()->constrained();
             $table->foreignId('producto_id')->nullable()->constrained();
         });

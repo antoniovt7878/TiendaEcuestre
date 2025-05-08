@@ -36,78 +36,38 @@
         </form>
     </div>
     @endif
-    <div class="card mt-4 p-4">
-        <h2 class="mb-4">Productos</h2>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered align-middle text-center">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Marca</th>
-                        <th colspan="2">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($productos as $producto)
-                    @if(session('user_rol')=='admin')
-                    <tr>
-                        <form action="{{ route('producto.guardar', $producto->id) }}" method="POST">
-                            @csrf
-                            <td>
-                                <input type="text" name="nombre" value="{{ $producto->nombre }}" class="form-control" required>
-                            </td>
-                            <td>
-                                <input type="text" name="descripcion" value="{{ $producto->descripcion }}" class="form-control" required>
-                            </td>
-                            <td>
-                                <input type="number" step="0.01" name="precio" value="{{ $producto->precio }}" class="form-control" required>
-                            </td>
-                            <td>
-                                <input type="number" step="1" name="stock" value="{{ $producto->stock }}" class="form-control" required>
-                            </td>
-                            <td>
-                                <input type="text" name="marca" value="{{ $producto->marca }}" class="form-control" required>
-                            </td>
-                            <td>
-                                <button type="submit" class="btn btn-sm btn-success">Guardar</button>
-                            </td>
-                        </form>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Productos</h2>
 
-                        <td>
-                            <form action="{{ route('producto.eliminar', $producto->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-warning">
-                                    Eliminar
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @forelse($productos as $producto)
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 bg-light">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $producto->nombre }}</h5>
+                        <p class="card-text text-muted">{{ $producto->descripcion }}</p>
+                        <p class="fw-bold text-success mb-2">${{ number_format($producto->precio, 2) }}</p>
+                        <small class="text-muted mb-2">Stock: {{ $producto->stock }} | Marca: {{ $producto->marca }}</small>
+                        <div class="d-flex gap-2">
+                            <form action="{{ route('carrito.agregar', $producto->id) }}" class="mt-auto">
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="bi bi-cart-plus me-1"></i> Añadir al carrito
                                 </button>
                             </form>
-                        </td>
-                    </tr>
-                    @else
-                    <tr>
-                        <td>{{ $producto->nombre }}</td>
-                        <td>{{ $producto->descripcion }}</td>
-                        <td>${{ number_format($producto->precio, 2) }}</td>
-                        <td>{{ $producto->stock }}</td>
-                        <td>{{ $producto->marca }}</td>
-                        <td>
-                            <form action="{{ route('carrito.agregar', $producto->id) }}">
-                                <button type="submit" class="btn btn-sm btn-warning">
-                                    <i class="bi bi-cart-plus"></i> Añadir
+                            <form action="{{ route('producto.like', $producto->id) }}" class="mt-auto">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-heart"></i> Me gusta
                                 </button>
                             </form>
-                        </td>
-                    </tr>
-                    @endif
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-muted">No hay productos actualmente.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="col-12">
+                <div class="alert alert-info text-center">No hay productos disponibles en este momento.</div>
+            </div>
+            @endforelse
         </div>
     </div>
 </div>

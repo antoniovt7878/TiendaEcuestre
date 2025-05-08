@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('direcciones', function (Blueprint $table) {
+        Schema::create('direccions', function (Blueprint $table) {
             $table->id();
             $table->string('calle');
             $table->string('ciudad');
             $table->string('codigo_postal');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('venta_id')->unique()->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('venta_id')->references('id')->on('ventas')->onDelete('set null');
         });
     }
 

@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('deseos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');       // Usuario que desea algo
-            $table->unsignedBigInteger('producto_id');   // Producto deseado
             $table->timestamps();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('producto_id')->nullable()->constrained();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
-
-            $table->unique(['user_id', 'producto_id']); // Evita duplicados
+            $table->unique(['user_id', 'producto_id']);
         });
     }
 

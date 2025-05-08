@@ -40,3 +40,4 @@ Route::post('productos', [ProductosController::class, 'crear'])->name('producto.
 Route::post('productos/guardar/{id}', [ProductosController::class, 'guardar'])->name('producto.guardar');
 Route::post('productos/eliminar/{id}', [ProductosController::class, 'eliminar'])->name('producto.eliminar');
 Route::get('productos', [ProductosController::class, 'index'])->name('producto.ver');
+Route::get('productos/like', [ProductosController::class, 'like'])->name('producto.like');

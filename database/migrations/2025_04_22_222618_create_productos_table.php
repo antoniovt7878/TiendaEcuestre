@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('precio');
             $table->integer('stock');
             $table->string('marca');
+            $table->integer('deseo');
         });
     }
 

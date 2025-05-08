@@ -20,7 +20,8 @@ class ProductoSeeder extends Seeder
             'descripcion' => 'Montura inglesa',
             'precio' => 1000,
             'stock' => 5,
-            'marca' => 'Ejemplo'
+            'marca' => 'Ejemplo',
+            'deseo' => 0
         ]);
 
         Producto::create([
@@ -28,7 +29,8 @@ class ProductoSeeder extends Seeder
             'descripcion' => 'Montura vaquera',
             'precio' => 750,
             'stock' => 5,
-            'marca' => 'Ejemplo2'
+            'marca' => 'Ejemplo2',
+            'deseo' => 0
         ]);
     }
 }
