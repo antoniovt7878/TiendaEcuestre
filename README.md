@@ -23,7 +23,7 @@ Como relaciones claves tendremos:
 
 Aquí podremos ver su UML:
 
-<img width="761" alt="UML" src="https://github.com/user-attachments/assets/03065d65-bc0f-4b0f-9443-6ca5f09823ca" />
+<img width="761" alt="UML" src="https://github.com/user-attachments/assets/e05fca24-f6af-4490-811b-c335c6a6dc31" />
 
 ## Objetivo Principal y requisitos del proyecto
 
