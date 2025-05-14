@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1>Carrito de compra</h1>
+    <h1>{{ __('carrito.title') }}</h1>
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle text-center">
             <thead class="table-secondary">
                 <tr>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Acciones</th>
+                    <th>{{ __('carrito.name') }}</th>
+                    <th>{{ __('carrito.price') }}</th>
+                    <th>{{ __('carrito.quantity') }}</th>
+                    <th>{{ __('carrito.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,36 +22,36 @@
                     <td>
                         <form action="{{ route('carrito.eliminar', $producto['id']) }}">
                             <button type="submit" class="btn btn-sm btn-danger">
-                                Eliminar
+                                {{ __('carrito.remove') }}
                             </button>
                         </form>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-muted">No hay productos actualmente.</td>
+                    <td colspan="4" class="text-muted">{{ __('carrito.no_products') }}</td>
                 </tr>
                 @endforelse
                 <tr>
-                    <td>Importe total:</td>
+                    <td>{{ __('carrito.total_amount') }}</td>
                     <td colspan="3">${{ number_format($importeTotal, 2) }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="d-flex justify-content-between mt-3">
-        <a href="{{ route('tienda.index') }}" class="btn btn-primary">Volver a la tienda</a>
+        <a href="{{ route('tienda.index') }}" class="btn btn-primary">{{ __('carrito.back_to_store') }}</a>
         <form action="{{ route('carrito.terminar') }}" method="POST">
             @csrf
             <select name="direccion" id="direccion">
                 @forelse($direcciones as $direccion)
                 <option value="{{ $direccion->id }}">{{ $direccion->calle }}, {{ $direccion->ciudad }}</option>
                 @empty
-                <option value="">No hay direcciones disponibles</option>
+                <option value="">{{ __('carrito.no_addresses') }}</option>
                 @endforelse
             </select>
-            <a href="{{ route('direccion.ver') }}" class="btn btn-warning">Nueva direccion</a>
-            <button type="submit" class="btn btn-success">Terminar pedido</button>
+            <a href="{{ route('direccion.ver') }}" class="btn btn-warning">{{ __('carrito.new_address') }}</a>
+            <button type="submit" class="btn btn-success">{{ __('carrito.finish_order') }}</button>
         </form>
     </div>
 </div>

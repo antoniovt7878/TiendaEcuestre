@@ -20,13 +20,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ route('tienda.index') }}">Inicio</a>
+                        <a class="nav-link" aria-current="page" href="{{ route('tienda.index') }}">{{ __('navbar.home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('producto.ver') }}">Catálogo</a>
+                        <a class="nav-link" href="{{ route('producto.ver') }}">{{ __('navbar.catalog') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('verVentas') }}">Pedidos</a>
+                        <a class="nav-link" href="{{ route('verVentas') }}">{{ __('navbar.orders') }}</a>
                     </li>
                     <a class="nav-link position-relative" href="{{ route('verCarrito') }}">
                         <i class="bi bi-cart-fill"></i>
@@ -60,7 +60,7 @@
     </main>
 
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p class="mb-0">Tienda Ecuestre 2025 - Todos los derechos reservados</p>
+        <p class="mb-0">Tienda Ecuestre 2025 - {{ __('navbar.footer') }}</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
