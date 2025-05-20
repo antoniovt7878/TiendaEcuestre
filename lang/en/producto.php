@@ -13,4 +13,8 @@ return [
     'like' => 'Like',
     'delete' => 'Delete',
     'no_products' => 'No products available at this time.',
+    'categories' => 'Categories',
+    'filter' => 'Filter by category',
+    'filter_boton' => 'Filter',
+    'clear_filter' => 'Clear filter',
 ];

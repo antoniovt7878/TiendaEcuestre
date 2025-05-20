@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritosController;
+use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\DeseosController;
 use App\Http\Controllers\DireccionesController;
 use App\Http\Controllers\VentasController;
@@ -40,8 +41,9 @@ Route::get('/pedidos/modificar/{id}', [VentasController::class, 'modificar'])->n
 
 Route::post('productos', [ProductosController::class, 'crear'])->name('producto.crear');
 Route::post('productos/guardar/{id}', [ProductosController::class, 'guardar'])->name('producto.guardar');
-Route::post('productos/eliminar/{id}', [ProductosController::class, 'eliminar'])->name('producto.eliminar');
+Route::delete('productos/eliminar/{id}', [ProductosController::class, 'eliminar'])->name('producto.eliminar');
 Route::get('productos', [ProductosController::class, 'index'])->name('producto.ver');
+Route::get('productos/filtrado', [ProductosController::class, 'filtro'])->name('producto.filtrar');
 
 Route::get('productos/like/{id}', [DeseosController::class, 'agregarProductoAlDeseo'])->name('deseo.like');
 Route::get('deseo', [DeseosController::class, 'index'])->name('verDeseo');
@@ -49,3 +51,7 @@ Route::get('deseo', [DeseosController::class, 'index'])->name('verDeseo');
 Route::post('direccion/crear', [DireccionesController::class, 'crear'])->name('crearDireccion');
 Route::post('direccion', [DireccionesController::class, 'index'])->name('direccion.ver');
 Route::post('direccion/eliminar/{id}', [DireccionesController::class, 'eliminar'])->name('direccion.eliminar');
+
+Route::get('categoria', [CategoriasController::class, 'index'])->name('categoria.ver');
+Route::post('categoria', [CategoriasController::class, 'crear'])->name('categoria.crear');
+Route::delete('categoria/eliminar/{id}', [CategoriasController::class, 'eliminar'])->name('categoria.eliminar');

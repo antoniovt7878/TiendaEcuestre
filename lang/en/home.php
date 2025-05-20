@@ -9,4 +9,5 @@ return [
     'add_to_cart' => 'Add to Cart',
     'like' => 'Like',
     'no_products' => 'No products available at this time.',
+    'noDisponible' => 'Page not available',
 ];

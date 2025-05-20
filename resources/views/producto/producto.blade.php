@@ -32,6 +32,14 @@
                 <input type="text" name="marca" id="marca" class="form-control" required>
             </div>
 
+            <label for="categorias">{{ __('producto.categories') }}</label>
+            @foreach($categorias as $categoria)
+            <div>
+                <input type="checkbox" name="categorias[]" id="categoria_{{ $categoria->id }}" value="{{ $categoria->id }}">
+                <label for="categoria_{{ $categoria->id }}">{{ $categoria->nombre }}</label>
+            </div>
+            @endforeach
+
             <button type="submit" class="btn btn-primary mt-3">{{ __('producto.create_button') }}</button>
         </form>
     </div>
@@ -39,7 +47,18 @@
 
     <div class="container my-5">
         <h2 class="text-center mb-4">{{ __('producto.product_list') }}</h2>
-
+        <div class="d-flex justify-content-between mb-4">
+            <form action="{{ route('producto.filtrar') }}" method="GET" class="d-flex align-items-center flex-wrap gap-2">
+                <label for="categoria">{{ __('producto.filter') }}</label>
+                <select name="categoria" id="categoria" class="form-select me-2">
+                    @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn btn-primary">{{ __('producto.filter_boton') }}</button>
+                <a href="{{ route('producto.ver') }}" class="btn btn-danger">{{ __('producto.clear_filter') }}</a>
+            </form>
+        </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @forelse($productos as $producto)
             <div class="col">
@@ -61,7 +80,9 @@
                                 </button>
                             </form>
                             @if(session('user_rol') == 'admin')
-                            <form action="{{ route('producto.eliminar', $producto->id) }}" class="mt-auto">
+                            <form action="{{ route('producto.eliminar', $producto->id) }}" method="post" class="mt-auto">
+                                @csrf
+                                @method('DELETE')
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-trash"></i> {{ __('producto.delete') }}
                                 </button>

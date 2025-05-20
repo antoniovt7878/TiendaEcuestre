@@ -28,6 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('verVentas') }}">{{ __('navbar.orders') }}</a>
                     </li>
+                    @if(session('user_rol') == 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('categoria.ver') }}">{{ __('navbar.categories') }}</a>
+                    </li>
+                    @endif
                     <a class="nav-link position-relative" href="{{ route('verCarrito') }}">
                         <i class="bi bi-cart-fill"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark cart-count">
