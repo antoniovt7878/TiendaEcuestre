@@ -88,6 +88,7 @@ class ProductosController extends Controller
             $linea->delete();
         }
 
+        $producto->categorias()->detach();
         $producto->delete();
 
         return redirect()->route('producto.ver');

@@ -90,7 +90,7 @@ class CarritosController extends Controller
         $lineaDeCarrito->save();
         $carrito->save();
     
-        return redirect()->route('tienda.index');
+        return redirect()->route('producto.ver');
     }
 
     public function eliminarProductoDelCarrito($id)
@@ -144,7 +144,7 @@ class CarritosController extends Controller
         }
         $carrito->delete();
 
-        Mail::to($usuario->email)->send(new VentaFinalizada($venta));
+        //Mail::to($usuario->email)->send(new VentaFinalizada($venta));
 
         return redirect()->route('verVentas');
     }
