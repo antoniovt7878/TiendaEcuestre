@@ -5,7 +5,7 @@
     @if(session('user_rol')=='cliente')
     <div class="card p-4">
         <h2 class="mb-4">Crear Direccion</h2>
-        <form action="{{ route('direccion.crear') }}" method="POST">
+        <form action="{{ route('crearDireccion') }}" method="POST">
             @csrf
             <div class="form-group mb-3">
                 <label for="calle">Calle</label>

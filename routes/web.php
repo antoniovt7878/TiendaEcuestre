@@ -49,8 +49,8 @@ Route::get('productos/like/{id}', [DeseosController::class, 'agregarProductoAlDe
 Route::get('deseo', [DeseosController::class, 'index'])->name('verDeseo');
 
 Route::post('direccion/crear', [DireccionesController::class, 'crear'])->name('crearDireccion');
-Route::post('direccion', [DireccionesController::class, 'index'])->name('direccion.ver');
-Route::post('direccion/eliminar/{id}', [DireccionesController::class, 'eliminar'])->name('direccion.eliminar');
+Route::get('direccion', [DireccionesController::class, 'index'])->name('direccion.ver');
+Route::get('direccion/eliminar/{id}', [DireccionesController::class, 'eliminar'])->name('direccion.eliminar');
 
 Route::get('categoria', [CategoriasController::class, 'index'])->name('categoria.ver');
 Route::post('categoria', [CategoriasController::class, 'crear'])->name('categoria.crear');
